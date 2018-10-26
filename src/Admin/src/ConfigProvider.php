@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace Admin;
 
 use Zend\Expressive\Hal\LinkGeneratorFactory;
 use Zend\Expressive\Hal\LinkGenerator\ExpressiveUrlGeneratorFactory;
@@ -13,7 +13,7 @@ use Zend\Expressive\Helper\UrlHelperMiddlewareFactory;
 use Zend\Expressive\Router\Middleware\RouteMiddlewareFactory;
 use Zend\Expressive\Hal\Metadata\RouteBasedResourceMetadata;
 use Zend\Hydrator\ObjectProperty as ObjectPropertyHydrator;
-use stdClass;
+use Zend\Expressive\Router\FastRouteRouterFactory;
 
 /**
  * The configuration provider for the App module.
@@ -55,9 +55,8 @@ class ConfigProvider
                 $ns . '\LinkGenerator' => new LinkGeneratorFactory($ns . '\UrlGenerator'),
                 $ns . '\ResourceGenerator' => new ResourceGeneratorFactory($ns . '\LinkGenerator'),
                 $ns . '\RouteMiddleware' => new RouteMiddlewareFactory($ns . '\Router'),
-                $ns . '\Router' => RouterFactory::class,
-                $ns . '\RouteCollector' => RouteCollectorFactory::class,
-                $ns . '\UrlHelper' => new UrlHelperFactory('/api', $ns . '\Router'),
+                $ns . '\Router' => FastRouteRouterFactory::class,
+                $ns . '\UrlHelper' => new UrlHelperFactory('', $ns . '\Router'),
                 $ns . '\UrlHelperMiddleware' => new UrlHelperMiddlewareFactory($ns . '\UrlHelper'),
                 $ns . '\UrlGenerator' => new ExpressiveUrlGeneratorFactory($ns . '\UrlHelper'),
 
@@ -78,8 +77,8 @@ class ConfigProvider
         return [
             [
                 '__class__' => RouteBasedResourceMetadata::class,
-                'resource_class' => stdClass::class,
-                'route' => 'api.ping',
+                'resource_class' => AdminStdClass::class,
+                'route' => 'admin.ping',
                 'extractor' => ObjectPropertyHydrator::class,
             ],
         ];

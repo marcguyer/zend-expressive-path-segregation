@@ -2,10 +2,11 @@
 
 declare(strict_types=1);
 
-namespace App;
+namespace Api;
 
 use Psr\Container\ContainerInterface;
 use Zend\Expressive\MiddlewareFactory;
+use Zend\Expressive\Router\RouteCollector;
 use Zend\Expressive\Router\Middleware\ImplicitHeadMiddleware;
 use Zend\Expressive\Router\Middleware\ImplicitOptionsMiddleware;
 use Zend\Expressive\Router\Middleware\MethodNotAllowedMiddleware;
@@ -37,6 +38,11 @@ class PipelineFactory
         $p->pipe($f->lazy(__NAMESPACE__ . '\UrlHelperMiddleware')); // module-specific!
         $p->pipe($f->lazy(DispatchMiddleware::class));
         $p->pipe($f->lazy(ProblemDetailsNotFoundHandler::class));
+
+        $router = $container->get(__NAMESPACE__ . '\Router');
+        $r = new RouteCollector($router);
+
+        $r->get('/ping', $f->lazy(Handler\PingHandler::class), 'api.ping');
 
         return $p;
     }
