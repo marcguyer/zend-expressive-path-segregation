@@ -15,4 +15,6 @@ use stdClass;
  * This works around that issue instead of creating metadata maps
  * isolated by module.
  */
-class AdminStdClass extends stdClass {}
+class AdminStdClass extends stdClass
+{
+}

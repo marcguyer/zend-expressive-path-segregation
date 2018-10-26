@@ -15,7 +15,6 @@ use Zend\Expressive\Hal\Metadata\RouteBasedResourceMetadata;
 use Zend\Hydrator\ObjectProperty as ObjectPropertyHydrator;
 use stdClass;
 use Zend\Expressive\Router\FastRouteRouterFactory;
-use Zend\Expressive\Router\RouterInterface;
 
 /**
  * The configuration provider for the App module.
